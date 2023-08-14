@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Parser</title>
+    <style>
+        body {
+            min-height: 100vh;
+        }
+
+        .flex-container {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+
+        .container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 100%;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+
+        textarea {
+            width: 98%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 8px 16px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #outputDiv {
+            width: 98%;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+    </style>
+    <script>
+        function parseText() {
+            var inputText = document.getElementById("inputTextarea").value;
+            inputText = stripUntilFirstOpenCurlyBrace(inputText);
+            const formattedText = formatInputText(inputText);
+            document.getElementById("outputDiv").innerText = formattedText;
+        }
+
+        function formatInputText(input) {
+            let formattedText = "";
+            let indentLevel = 0;
+
+            for (let i = 0; i < input.length; i++) {
+                const char = input[i];
+
+                if (char === '{' || char === '[') {
+                    formattedText += char + "\n" + " ".repeat(indentLevel * 4);
+                    indentLevel++;
+                } else if (char === '}' || char === ']') {
+                    indentLevel = Math.max(0, indentLevel - 1);
+                    formattedText += "\n" + " ".repeat(indentLevel * 4) + char;
+                } else {
+                    formattedText += char;
+                }
+            }
+
+            return formattedText;
+        }
+
+        function stripUntilFirstOpenCurlyBrace(inputText) {
+            return inputText.substring(inputText.indexOf('{'));
+        }
+    </script>
+</head>
+<body>
+<div class="flex-container">
+    <div class="container">
+        <h1>Text Parser</h1>
+        <textarea id="inputTextarea" rows="10" placeholder="Enter your text here"></textarea>
+        <button onclick="parseText()">Parse</button>
+    </div>
+</div>
+<div class="flex-container">
+    <div class="container">
+        <div id="outputDiv"></div>
+    </div>
+</div>
+
+</body>
+</html>
