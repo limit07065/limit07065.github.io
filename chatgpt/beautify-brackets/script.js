@@ -5,28 +5,38 @@ function parseText() {
 }
 
 function formatInputText(input) {
-    let formattedText = "";
+    let formattedText = " ";
     let indentLevel = 0;
     var inQuote = false;
+    var justEndLine = false;
 
     for (let i = 0; i < input.length; i++) {
         const char = input[i];
 
-        if (char === "\""){
+        if (char === "\"") {
             inQuote = !inQuote;
         }
 
-        var openBracketRegExp = /[{[\(]/;
+        var openBracketRegExp = /[{\[\(]/;
+        var closeBracketRegExp = /[}\]\)]/;
         if (openBracketRegExp.test(char)) {
             indentLevel++;
             formattedText += char + "\n" + " ".repeat(indentLevel * 4);
-        } else if (shouldEndLine(char,inQuote)){
-            formattedText += char + "\n" + " ".repeat(indentLevel * 4);
-        }
-        else if (char === '}' || char === ']') {
+
+        } else if (closeBracketRegExp.test(char)) {
             indentLevel = Math.max(0, indentLevel - 1);
             formattedText += "\n" + " ".repeat(indentLevel * 4) + char;
+            justEndLine = true;
+
+        } else if (shouldEndLine(char, inQuote)) {
+            formattedText += char + "\n" + " ".repeat(indentLevel * 4);
+            justEndLine = false;
+
         } else {
+            if (justEndLine){
+                formattedText += "\n" + " ".repeat(indentLevel * 4);
+                justEndLine = false;
+            }
             formattedText += char;
         }
     }
@@ -34,8 +44,8 @@ function formatInputText(input) {
     return formattedText;
 }
 
-function shouldEndLine(char, inQuote){
-    if (char === ',' &&  inQuote == false){
+function shouldEndLine(char, inQuote) {
+    if (char === ',' && inQuote == false) {
         return true;
     }
     return false;
