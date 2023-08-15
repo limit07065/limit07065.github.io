@@ -27,7 +27,7 @@ function populateInputHistory(inputHistory) {
 }
 
 // Simulated input history for testing
-const inputHistory = JSON.parse(localStorage.getItem('inputHistory'));
+const inputHistory = JSON.parse(localStorage.getItem('inputHistory')) || [];
 
 // Function to track and display input history
 function trackElectricity() {
