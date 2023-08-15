@@ -1,1 +1,49 @@
-Electricity Monitor
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Electricity Monitor - Home</title>
+  <link rel="stylesheet" href="common/style.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <nav>
+    <ul>
+      <li><a href="#">Home</a></li>
+      <!-- <li><a href="usage-trend/index.html">Usage Trend</a></li> -->
+      <li><a href="estimated-bill/index.html">Estimated Bill</a></li>
+    </ul>
+  </nav>
+
+  <div id="content">
+    <!-- Home page content here -->
+    <h2>Electricity Monitor</h2>
+
+    <!-- Input form -->
+    <div id="inputContainer">
+      <label for="electricityInput">Enter Electricity Consumption: </label>
+      <input type="number" id="electricityInput">
+      <button id="submitBtn" type="button">Submit</button>
+    </div>
+
+    <!-- Input history section -->
+    <div id="inputHistoryContainer">
+      <h3>History:</h3>
+      <table>
+        <thead>
+          <th>No.</th>
+          <th>Value</th>
+          <th>Time</th>
+        </thead>
+        <tbody id="inputHistory">
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+
+</html>
